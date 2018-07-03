@@ -76,9 +76,6 @@ RUN apt-get install -y libreadline-dev
 #Below are the steps to configure 7.1 version mcrypt with php7.2
 RUN pecl install mcrypt-1.0.1
 
-#RUN echo "extension=/usr/lib/php/20170718/mcrypt.so" > /etc/php/7.2/cli/conf.d/mcrypt.ini \
-#RUN echo "extension=/usr/lib/php/20170718/mcrypt.so" > /etc/php/7.2/apache2/conf.d/mcrypt.ini
-
 RUN apt-get install -y php7.1-mcrypt
 RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.2/mods-available/
 RUN phpenmod mcrypt
