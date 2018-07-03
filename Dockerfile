@@ -81,15 +81,6 @@ RUN a2enmod mpm_event alias
 RUN a2enmod fastcgi proxy_fcgi
 
 
-#RUN echo "opcache.validate_timestamps=0" >> /etc/php/7.2/fpm/php.ini \
-#    echo 'opcache.enable_cli=1' > /etc/php/7.2/cli/conf.d/20-opcache-enable_cli.ini && \
-#    echo 'short_open_tag=On' > /etc/php/7.2/fpm/conf.d/40-shortag.ini && \
-#    echo 'display_errors=On' > /etc/php/7.2/fpm/conf.d/50-display_errors.ini && \
-#    echo 'short_open_tag=On' > /etc/php/7.2/cli/conf.d/40-shortag.ini && \
-#    echo 'display_errors=On' > /etc/php/7.2/cli/conf.d/50-display_errors.ini
-
-#COPY www.conf /etc/php/7.2/fpm/pool.d/www.conf
-
 RUN apt-get clean
 EXPOSE 8080
 
