@@ -81,6 +81,12 @@ RUN a2enmod mpm_event alias
 RUN a2enmod fastcgi proxy_fcgi
 
 
+# Install composer
+ENV COMPOSER_VERSION latest
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && \
+    composer self-update
+
+
 RUN apt-get clean
 EXPOSE 8080
 
