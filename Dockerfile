@@ -1,5 +1,9 @@
 FROM ubuntu:16.04
-MAINTAINER krutpong@gmail.com
+MAINTAINER krutpong "krutpong@gmail.com"
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV INITRD No
+ENV LANG en_US.UTF-8
 
 #add Thailand repo
 RUN echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial main restricted" > /etc/apt/sources.list && \
@@ -74,20 +78,20 @@ RUN apt-get install -y libreadline-dev
 
 #Pointing to php7.1-mcrypt with php7.2 will solve the issue here.
 #Below are the steps to configure 7.1 version mcrypt with php7.2
+RUN apt-get -y install gcc make autoconf libc-dev pkg-config
+RUN apt-get -y install libmcrypt-dev
 RUN pecl install mcrypt-1.0.1
 
-RUN apt-get install -y php7.1-mcrypt
-RUN ln -s /etc/php/7.1/mods-available/mcrypt.ini /etc/php/7.2/mods-available/
 RUN phpenmod mcrypt
-
 
 RUN a2enconf php7.2-fpm
 RUN a2dismod mpm_prefork
 RUN a2enmod mpm_event alias
 RUN a2enmod fastcgi proxy_fcgi
-
+RUN a2enmod rewrite
 
 # Install composer
+RUN apt-get install -y zip
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
@@ -107,7 +111,6 @@ RUN chmod 744 apache_enable.sh
 VOLUME ["/var/www","/var/www"]
 RUN service php7.2-fpm start
 CMD ["/usr/bin/supervisord"]
-
 
 
 

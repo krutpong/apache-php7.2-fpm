@@ -5,6 +5,13 @@ This repo is used apache2.4 with PHP version 7.2 on FastCGI service.
 It can support share host you can see in folder sites-available then after run container apache will run command a2ensite * in sites-available.
 I install the basic package like this.
 
+#### build image
+
+```
+$ docker build -t="leafney/ubuntu-mysql" .
+```
+
+
 #setup git
 git
 
