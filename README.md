@@ -8,7 +8,7 @@ I install the basic package like this.
 #### build image
 
 ```
-$ docker build -t="leafney/ubuntu-mysql" .
+$ docker build -t="krutpong/apache-php7.2-fpm" .
 ```
 
 
