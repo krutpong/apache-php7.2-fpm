@@ -7,9 +7,13 @@ I install the basic package like this.
 
 #### Run Apache Open SSL Self-Certificate
 ```
+<<<<<<< HEAD
 docker run -d -p 80:80 -p 443:443
 -v /hostpath/sites-available:/etc/apache2/sites-available/ 
 krutpong/apache-php7.2-fpm
+=======
+$ docker build -t="krutpong/apache-php7.2-fpm" .
+>>>>>>> 97b9a48a649acf38bb04b05e1b68371a704ae824
 ```
 
 #setup git
