@@ -35,7 +35,6 @@ RUN mkdir -p /var/log/supervisor
 
 #setup apache
 RUN apt-get install -y apache2
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 RUN mkdir -p /var/lock/apache2 /var/run/apache2
 
@@ -71,7 +70,7 @@ RUN apt-get install -y php-mbstring
 RUN apt-get install -y imagemagick
 RUN apt-get install -y php-imagick
 RUN apt-get install -y php-mcrypt
-RUN apt-get install -y gcc make autoconf libc-dev pkg-config
+RUN apt-get install -y php-zip
 RUN apt-get install -y libmcrypt-dev
 RUN apt-get install -y libreadline-dev
 
@@ -84,11 +83,21 @@ RUN pecl install mcrypt-1.0.1
 
 RUN phpenmod mcrypt
 
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=AT/ST=Vienna/L=Vienna/O=Security/OU=Development/CN=example.com"
+
 RUN a2enconf php7.2-fpm
 RUN a2dismod mpm_prefork
 RUN a2enmod mpm_event alias
 RUN a2enmod fastcgi proxy_fcgi
 RUN a2enmod rewrite
+RUN a2enmod ssl
+RUN a2enmod headers
+
+
+RUN sed -i 's/^ServerSignature/#ServerSignature/g' /etc/apache2/conf-enabled/security.conf; \
+    sed -i 's/^ServerTokens/#ServerTokens/g' /etc/apache2/conf-enabled/security.conf; \
+    echo "ServerSignature Off" >> /etc/apache2/conf-enabled/security.conf; \
+    echo "ServerTokens Prod" >> /etc/apache2/conf-enabled/security.conf;
 
 # Install composer
 RUN apt-get install -y zip
@@ -96,8 +105,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 
 RUN apt-get clean
-EXPOSE 8080
 
+EXPOSE 80
+EXPOSE 443
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ADD config/index.html /var/www/index.html

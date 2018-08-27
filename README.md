@@ -5,12 +5,12 @@ This repo is used apache2.4 with PHP version 7.2 on FastCGI service.
 It can support share host you can see in folder sites-available then after run container apache will run command a2ensite * in sites-available.
 I install the basic package like this.
 
-#### build image
-
+#### Run Apache Open SSL Self-Certificate
 ```
-$ docker build -t="leafney/ubuntu-mysql" .
+docker run -d -p 80:80 -p 443:443
+-v /hostpath/sites-available:/etc/apache2/sites-available/ 
+krutpong/apache-php7.2-fpm
 ```
-
 
 #setup git
 git
