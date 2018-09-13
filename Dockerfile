@@ -6,16 +6,16 @@ ENV INITRD No
 ENV LANG en_US.UTF-8
 
 #add Thailand repo
-RUN echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial main restricted" > /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial-updates main restricted" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial-updates universe" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial-updates multiverse" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial-security main restricted" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial-security universe" >> /etc/apt/sources.list && \
-    echo "deb http://th.archive.ubuntu.com/ubuntu/ xenial-security multiverse" >> /etc/apt/sources.list && \
+RUN echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial main restricted" > /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial-updates main restricted" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial universe" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial-updates universe" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial-updates multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial-security main restricted" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial-security universe" >> /etc/apt/sources.list && \
+    echo "deb http://mirror1.ku.ac.th/ubuntu/ xenial-security multiverse" >> /etc/apt/sources.list && \
     apt-get update
 
 RUN apt-get install -y software-properties-common
@@ -75,6 +75,11 @@ RUN apt-get install -y libmcrypt-dev
 RUN apt-get install -y libreadline-dev
 
 
+
+RUN echo "Asia/Bangkok" > /etc/timezone \
+    rm /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
 #Pointing to php7.1-mcrypt with php7.2 will solve the issue here.
 #Below are the steps to configure 7.1 version mcrypt with php7.2
 RUN apt-get -y install gcc make autoconf libc-dev pkg-config
@@ -116,6 +121,7 @@ COPY config/apache2.conf /etc/apache2/apache2.conf
 
 COPY config/apache_enable.sh apache_enable.sh
 RUN chmod 744 apache_enable.sh
+
 
 #VOLUME ["/var/lib/mysql"]
 VOLUME ["/var/www","/var/www"]
