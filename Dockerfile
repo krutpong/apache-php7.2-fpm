@@ -25,7 +25,7 @@ RUN apt-get update
 
 #setup timezone
 RUN apt-get install -y tzdata
-RUN echo "Asia/Kolkata" > /etc/timezone \
+RUN echo "Asia/Bangkok" > /etc/timezone \
     rm /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
@@ -73,12 +73,8 @@ RUN apt-get install -y php-mcrypt
 RUN apt-get install -y php-zip
 RUN apt-get install -y libmcrypt-dev
 RUN apt-get install -y libreadline-dev
+RUN apt-get install -y phpunit
 
-
-
-RUN echo "Asia/Bangkok" > /etc/timezone \
-    rm /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata
 
 #Pointing to php7.1-mcrypt with php7.2 will solve the issue here.
 #Below are the steps to configure 7.1 version mcrypt with php7.2
