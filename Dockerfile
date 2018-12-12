@@ -56,6 +56,7 @@ RUN apt-get install -y libpcre3-dev
 RUN apt-get install -y php-mysql
 RUN apt-get install -y php-mcrypt
 RUN apt-get install -y pwgen
+RUN apt-get install -y php-bcmath
 RUN apt-get install -y php-cli
 RUN apt-get install -y php-curl
 RUN apt-get install -y php-sqlite3
