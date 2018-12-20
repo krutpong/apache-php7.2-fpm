@@ -83,6 +83,9 @@ RUN apt-get -y install libmcrypt-dev
 RUN pecl install mcrypt-1.0.1
 
 RUN phpenmod mcrypt
+RUN echo "extension=/usr/lib/php/20170718/mcrypt.so" > /etc/php/7.2/cli/conf.d/mcrypt.ini
+RUN echo "extension=/usr/lib/php/20170718/mcrypt.so" > /etc/php/7.2/fpm/conf.d/mcrypt.ini
+
 
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=AT/ST=Vienna/L=Vienna/O=Security/OU=Development/CN=example.com"
 
